@@ -32,29 +32,27 @@ public class ProblemSolutions {
         selectionSort(values, true);
     }
 
-    public static void selectionSort(int[] values, boolean ascending ) {
-
+    public static void selectionSort(int[] values, boolean ascending) {
         int n = values.length;
 
         for (int i = 0; i < n - 1; i++) {
-
-             int index = i; //find min or max based on the value of ascending
-            
-            for (int j = i + 1; j < n; j++) { // find min element if true
-                if (ascending) { // update if less than min
+            int index = i;
+            for (int j = i + 1; j < n; j++) {
+                if (ascending) {
                     if (values[j] < values[index]) {
                         index = j;
                     }
                 } else {
-
                     if (values[j] > values[index]) {
                         index = j;
                     }
                 }
             }
-        }    
-    } // End class selectionSort
-
+            int temp = values[i];
+            values[i] = values[index];
+            values[index] = temp;
+        }
+    }
 
     /**
      *  Method mergeSortDivisibleByKFirst
@@ -185,26 +183,17 @@ public class ProblemSolutions {
      * @return              - return true if all asteroids destroyed, else false.
      */
 
-    public static boolean asteroidsDestroyed(int mass, int[] asteroids) {
-
-        // YOUR CODE GOES HERE, CONSIDER USING ARRAYS.SORT()
-
-        Arrays.sort(people);
-        int left = 0;
-        int right = people.length - 1;
-        int sleds = 0;
-
-        while (left <= right) {
-            if (people[left] + people[right] <= limit) {
-                left++;
+     public static boolean asteroidsDestroyed(int mass, int[] asteroids) {
+        Arrays.sort(asteroids);
+        for (int asteroid : asteroids) {
+            if (mass >= asteroid) {
+                mass += asteroid;
+            } else {
+                return false;
             }
-            right--;
-            sleds++;
         }
-        return sleds;
+        return true;
     }
-
-
 
 
     /**
@@ -236,13 +225,23 @@ public class ProblemSolutions {
      * @return          - the minimum number of rescue sleds required to hold all people
      */
 
-    public static int numRescueSleds(int[] people, int limit) {
-
-        // YOUR CODE GOES HERE, CONSIDER USING ARRAYS.SORT
-
-        return -1;
-
+     public static int numRescueSleds(int[] people, int limit) {
+        if (people.length == 0 || limit == 0) return 0;
+        Arrays.sort(people);
+        int left = 0, right = people.length - 1, sleds = 0;
+    
+        while (left <= right) {
+            if (people[left] + people[right] <= limit) {
+                left++;
+            }
+            right--;
+            sleds++;
+        }
+    
+        return sleds;
     }
+    
+        
 
 } // End Class ProblemSolutions
 
